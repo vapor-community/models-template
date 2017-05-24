@@ -3,5 +3,8 @@
 import PackageDescription
 
 let package = Package(
-    name: "model-template"
+    name: "Models",
+    dependencies: [
+        .Package(url: "https://github.com/vapor/json.git", majorVersion: 2),
+    ]
 )
