@@ -3,3 +3,5 @@
 #else
     @_exported import JSON
 #endif
+
+@_exported import Core
