@@ -18,18 +18,30 @@ public final class Post: Extendable {
 //     - Creating a new Post (POST /posts)
 //     - Fetching a post (GET /posts, GET /posts/:id)
 //
-extension Post: JSONConvertible {
-    public convenience init(json: JSON) throws {
+extension Post: NodeConvertible {
+    public convenience init(node: Node) throws {
         try self.init(
-            id: json.get("id"),
-            content: json.get("content")
+            id: node.get("id"),
+            content: node.get("content")
         )
     }
 
-    public func makeJSON() throws -> JSON {
-        var json = JSON()
+    public func makeNode(in context: Context?) throws -> Node {
+        var json = Node(context)
         try json.set("id", id)
         try json.set("content", content)
+        return json
+    }
+}
+
+extension Post: JSONConvertible {
+    public convenience init(json: JSON) throws {
+        try self.init(node: json)
+    }
+
+    public func makeJSON() throws -> JSON {
+        var json = try converted(in: jsonContext) as JSON
+        try json.set("special-json-only-addition", "hello")
         return json
     }
 }
