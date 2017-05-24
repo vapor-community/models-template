@@ -1,6 +1,6 @@
 import XCTest
-@testable import model_templateTests
+@testable import ModelsTests
 
 XCTMain([
-    testCase(model_templateTests.allTests),
+    testCase(ModelsTests.allTests),
 ])
