@@ -3,12 +3,17 @@ import XCTest
 
 class ModelsTests: XCTestCase {
     static let allTests = [
-        ("testExample", testExample),
+        ("testPost", testPost),
     ]
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        XCTAssertEqual("Hello, World!", "Hello, World!")
+    func testPost() throws {
+        let raw = "{\"id\":\"1234-12ab-1235-aaaa\",\"content\":\"Hello, World!\"}"
+        let json = try JSON(bytes: raw.makeBytes())
+        let post = try Post(json: json)
+        XCTAssertEqual(post.id, Identifier.string("1234-12ab-1235-aaaa"))
+        XCTAssertEqual(post.content, "Hello, World!")
+
+        let serialized = try post.makeJSON().makeBytes().makeString()
+        XCTAssertEqual(raw, serialized)
     }
 }
